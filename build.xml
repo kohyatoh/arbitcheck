@@ -1,0 +1,56 @@
+<project name="ArbitCheck" default="dist" basedir=".">
+  <property name="src.main" location="src/main/java"/>
+  <property name="src.examples" location="src/test/java"/>
+
+  <property name="build" location="build"/>
+  <property name="build.main" location="${build}/main"/>
+  <property name="build.examples" location="${build}/examples"/>
+
+  <property name="dist" location="dist"/>
+  <property name="dist.jar" value="arbitcheck.jar"/>
+  <property name="dist.examples.jar" value="arbitcheck-examples.jar"/>
+
+  <property name="debug" value="off"/>
+  <property name="ant.build.javac.source" value="1.5"/>
+  <property name="ant.build.javac.target" value="1.5"/>
+
+  <target name="init">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${build.main}"/>
+    <mkdir dir="${build.examples}"/>
+    <mkdir dir="${dist}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src.main}"
+        destdir="${build.main}"
+        debug="${debug}"
+        includeantruntime="false">
+      <classpath>
+        <fileset dir="lib"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="compile-examples" depends="init,compile">
+    <javac srcdir="${src.examples}"
+        destdir="${build.examples}"
+        debug="${debug}"
+        includeantruntime="false">
+      <classpath>
+        <fileset dir="lib"/>
+        <pathelement location="${build.main}"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile,compile-examples">
+    <jar jarfile="${dist}/${dist.jar}" basedir="${build.main}"/>
+    <jar jarfile="${dist}/${dist.examples.jar}" basedir="${build.examples}"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
