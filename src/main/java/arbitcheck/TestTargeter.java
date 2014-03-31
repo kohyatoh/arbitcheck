@@ -17,7 +17,14 @@ public final class TestTargeter {
         targets.add(method.getDeclaringClass().getName());
         Set<Class<?>> params = new HashSet<Class<?>>();
         Function f = new AMethod(method);
+        Check check = method.getAnnotation(Check.class);
+        boolean shouldIgnoreMonitoring =
+                check == null ? false : check.monitoring();
         for (Class<?> clazz : f.getInputTypes()) {
+            if (shouldIgnoreMonitoring && Monitoring.class.equals(clazz)) {
+                shouldIgnoreMonitoring = false;
+                continue;
+            }
             params.add(clazz);
         }
         for (Class<?> clazz : params) {
