@@ -1,6 +1,7 @@
 package arbitcheck;
 
 import java.io.IOException;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -155,25 +156,49 @@ public class ClassTree {
 
     public static List<String> listClasses(String path) {
         try {
-            // TODO: support directory
-            JarFile jar = new JarFile(path);
-            List<String> classes = new ArrayList<String>();
-            Enumeration<JarEntry> en = jar.entries();
-            while (en.hasMoreElements()) {
-                JarEntry entry = en.nextElement();
-                String name = entry.getName();
-                if (name.endsWith(".class")) {
-                    classes.add(name.substring(0,
-                            name.length() - ".class".length())
-                            .replace('/', '.'));
-                }
+            if (path.endsWith(".jar")) {
+                return listClasses(new JarFile(path));
             }
-            return classes;
+            else {
+                return listClasses(new File(path), null);
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
+    }
+
+    public static List<String> listClasses(JarFile jar) throws IOException {
+        List<String> classes = new ArrayList<String>();
+        Enumeration<JarEntry> en = jar.entries();
+        while (en.hasMoreElements()) {
+            JarEntry entry = en.nextElement();
+            String name = entry.getName();
+            if (name.endsWith(".class")) {
+                classes.add(name.substring(0,
+                        name.length() - ".class".length())
+                        .replace('/', '.'));
+            }
+        }
+        return classes;
+    }
+
+    public static List<String> listClasses(File file, String name) throws IOException {
+        List<String> classes = new ArrayList<String>();
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                String childName =
+                    (name == null ? "" : name + ".") + child.getName();
+                classes.addAll(listClasses(child, childName));
+            }
+        }
+        else {
+            if (name.endsWith(".class")) {
+                classes.add(name.substring(0, name.length() - ".class".length()));
+            }
+        }
+        return classes;
     }
 
     private static class Node {
