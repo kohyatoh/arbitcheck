@@ -35,4 +35,15 @@ public class PropertyCheck implements randoop.Check {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return 7;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof PropertyCheck))
+            return false;
+        return true;
+    }
 }
