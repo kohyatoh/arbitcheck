@@ -460,7 +460,9 @@ public class GenTests extends GenInputsAbstract {
             }
         });
 
-        write_junit_tests(junit_output_dir, sequences, null);
+        if (!sequences.isEmpty()) {
+            write_junit_tests(junit_output_dir, sequences, null);
+        }
 
         return true;
     }
