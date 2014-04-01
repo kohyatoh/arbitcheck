@@ -153,7 +153,7 @@ public class GenTests extends GenInputsAbstract {
         java.security.Policy policy = java.security.Policy.getPolicy();
 
         if (!GenInputsAbstract.noprogressdisplay) {
-            System.out.printf("policy = %s%n", policy);
+//            System.out.printf("policy = %s%n", policy);
         }
 
         // If some properties were specified, set them
@@ -258,7 +258,7 @@ public class GenTests extends GenInputsAbstract {
             System.exit(1);
         }
         if (!GenInputsAbstract.noprogressdisplay) {
-            System.out.println("PUBLIC MEMBERS=" + model.size());
+//            System.out.println("PUBLIC MEMBERS=" + model.size());
         }
 
         // Initialize components.
@@ -292,7 +292,7 @@ public class GenTests extends GenInputsAbstract {
         // ///////////////////////////////////////
 
         if (!GenInputsAbstract.noprogressdisplay) {
-            System.out.printf("Explorer = %s\n", explorer);
+//            System.out.printf("Explorer = %s\n", explorer);
         }
 
         // Determine what visitors to install.
@@ -333,11 +333,11 @@ public class GenTests extends GenInputsAbstract {
 
         // Create JUnit files containing faults.
         if (!GenInputsAbstract.noprogressdisplay) {
-            System.out.println();
+//            System.out.println();
             // System.out.print("Creating Junit tests (" +
             // explorer.outSeqs.size() + " tests)...");
             // the number of resulting tests are unknown here
-            System.out.print("Creating JUnit tests...");
+//            System.out.print("Creating JUnit tests...");
         }
         List<ExecutableSequence> sequences = new ArrayList<ExecutableSequence>();
         for (ExecutableSequence p : explorer.outSeqs) {
@@ -426,8 +426,8 @@ public class GenTests extends GenInputsAbstract {
             // simplify each failed statement, and replace the original
             // sequences with the
             // simplified one
-            System.out.println("Start to simplify: " + failedSequences.size()
-                    + " sequences.");
+//            System.out.println("Start to simplify: " + failedSequences.size()
+//                    + " sequences.");
             for (ExecutableSequence failedSequence : failedSequences) {
                 GreedySequenceSimplifier simplifier = new GreedySequenceSimplifier(
                         failedSequence.sequence, explorer.executionVisitor);
@@ -492,12 +492,12 @@ public class GenTests extends GenInputsAbstract {
         // ret.add(jfw.writeDriverFile());
         List<File> files = ret;
         if (!GenInputsAbstract.noprogressdisplay) {
-            System.out.println();
+//            System.out.println();
         }
 
         for (File f : files) {
             if (!GenInputsAbstract.noprogressdisplay) {
-                System.out.println("Created file: " + f.getAbsolutePath());
+//                System.out.println("Created file: " + f.getAbsolutePath());
             }
         }
         return files;

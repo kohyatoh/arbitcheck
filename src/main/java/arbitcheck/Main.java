@@ -36,7 +36,7 @@ public final class Main {
         args.add("test"
                 + upperCamel(property.substring(property.lastIndexOf('.') + 1)));
         for (String className : mTargetClasses) {
-            System.err.println(className);
+//            System.err.println(className);
             args.add("--testclass");
             args.add(className);
         }

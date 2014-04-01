@@ -53,7 +53,7 @@ public class ProgressDisplay extends Thread {
 
     public String message() {
         StringBuilder b = new StringBuilder();
-        b.append("Progress update: test inputs generated="
+        b.append("Progress update: sequences generated="
                 + generator.num_sequences_generated);
         b.append(", failing inputs=" + generator.num_failing_sequences);
         b.append("      (" + new Date() + ")");
@@ -70,7 +70,7 @@ public class ProgressDisplay extends Thread {
     public void run() {
         while (true) {
             if (shouldStop) {
-                clear();
+//                clear();
                 return;
             }
             display();
@@ -168,10 +168,7 @@ public class ProgressDisplay extends Thread {
             return;
         String status = message;
         synchronized (print_synchro) {
-            System.out
-                    .print((this.outputMode == Mode.SINGLE_LINE_OVERWRITE ? "\r"
-                            : Globals.lineSep)
-                            + status);
+            System.out.println(status);
             System.out.flush();
         }
         // System.out.println (status);

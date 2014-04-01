@@ -99,19 +99,15 @@ public class CheckStat implements IEventListener {
     public void report(OutputStream s) {
         PrintStream ps = new PrintStream(s);
         ps.println("");
-        ps.println("# ArbitCheck Results ");
+        ps.println("# Results ");
         for (Method m : mCheckCount.keySet()) {
             int total = mCheckCount.get(m);
             int failed = mFailCount.get(m);
-            ps.println("- " + m.getName());
-            ps.println("  passed " + (total - failed) + " tests out of "
-                    + total + " tests.");
             if (failed != 0) {
-                ps.println("  " + failed
-                        + " tests failed. See JUnit tests for details.");
+                ps.println(m.getName() + ": Failed " + failed + " tests out of " + total + " tests.");
             }
             else {
-                ps.println("  no tests failed.");
+                ps.println(m.getName() + ": OK, passed " + total + " tests.");
             }
 
             final Map<String, Integer> labels = mLabelsForMethod.get(m);
